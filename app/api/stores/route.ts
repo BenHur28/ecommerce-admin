@@ -2,7 +2,7 @@ import prismadb from "@/lib/prismadb";
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
-export async function POST(req: Request) {
+export const POST = async (req: Request) => {
 	try {
 		const { userId } = auth();
 		const body = await req.json();
@@ -28,4 +28,4 @@ export async function POST(req: Request) {
 		console.log("[STORES_POST]", error);
 		return new NextResponse("Internal Error", { status: 500 });
 	}
-}
+};
