@@ -37,7 +37,7 @@ export const StoreModal = () => {
 		try {
 			setLoading(true);
 			const response = await axios.post("/api/stores", values);
-			// Causes page refresh for a better user experience while DB takes time to create.
+			// Causes redirect and page refresh for a better user experience while DB takes time to create.
 			window.location.assign(`/${response.data.id}`);
 		} catch (error) {
 			toast.error("Something went wrong.");
