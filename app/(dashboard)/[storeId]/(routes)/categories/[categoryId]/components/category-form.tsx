@@ -1,7 +1,7 @@
 "use client";
 
 import * as z from "zod";
-import { Category } from "@prisma/client";
+import { Billboard, Category } from "@prisma/client";
 
 import { Button } from "@/components/ui/button";
 import { Trash } from "lucide-react";
@@ -26,12 +26,14 @@ import { Heading } from "@/components/ui/heading";
 import {
 	Select,
 	SelectContent,
+	SelectItem,
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
 
 interface CategoryFormProps {
 	initialData: Category | null;
+	billboards: Billboard[];
 }
 
 const formSchema = z.object({
@@ -41,7 +43,10 @@ const formSchema = z.object({
 
 type CategoryFormValues = z.infer<typeof formSchema>;
 
-export const CategoryForm: React.FC<CategoryFormProps> = ({ initialData }) => {
+export const CategoryForm: React.FC<CategoryFormProps> = ({
+	initialData,
+	billboards,
+}) => {
 	const [open, setOpen] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const params = useParams();
@@ -163,7 +168,13 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({ initialData }) => {
 												></SelectValue>
 											</SelectTrigger>
 										</FormControl>
-										<SelectContent></SelectContent>
+										<SelectContent>
+											{billboards.map((billboard) => (
+												<SelectItem key={billboard.id} value={billboard.id}>
+													{billboard.label}
+												</SelectItem>
+											))}
+										</SelectContent>
 									</Select>
 									<FormMessage />
 								</FormItem>
